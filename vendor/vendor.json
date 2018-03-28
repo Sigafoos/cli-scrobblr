@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "Df8KgTDApsYmfz5V1Z8bqbmrpqE=",
+			"path": "github.com/Sigafoos/lastfm",
+			"revision": "d078e857349c092040242324e8e6fb6810510f99",
+			"revisionTime": "2018-03-27T17:34:15Z"
+		},
+		{
+			"checksumSHA1": "12g3NDgLPvSJcPKEKzU42m6GWVI=",
+			"path": "github.com/spf13/cobra",
+			"revision": "a1f051bc3eba734da4772d60e2d677f47cf93ef4",
+			"revisionTime": "2018-03-21T14:39:34Z"
+		},
+		{
+			"checksumSHA1": "tfKmT8uovT9Ch2YyDJtti3egAB4=",
+			"path": "github.com/spf13/pflag",
+			"revision": "ee5fd03fd6acfd43e44aea0b4135958546ed8e73",
+			"revisionTime": "2018-02-20T14:32:36Z"
+		}
+	],
+	"rootPath": "github.com/Sigafoos/scrobble"
+}
