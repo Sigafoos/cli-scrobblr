@@ -37,7 +37,10 @@ func scrobbleAlbum(cmd *cobra.Command, args []string) {
 	var album lastfm.Album
 
 	if mbid != "" {
-		album = lastfm.Album{MusicBrainzID: mbid}
+		album = lastfm.Album{
+			API:           lfm,
+			MusicBrainzID: mbid,
+		}
 	} else {
 		fmt.Print("album title: ")
 		title, _ := cli.ReadString('\n')
@@ -78,14 +81,14 @@ func scrobbleAlbum(cmd *cobra.Command, args []string) {
 		fmt.Printf("MBID: %s\n", album.MusicBrainzID)
 	}
 
-	album, err := lfm.AlbumInfo(album)
+	err := album.GetInfo()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	fmt.Printf("Scrobbling %v tracks from %s - \"%s\"\n\n", len(album.TrackList.Tracks), album.Artist, album.Name)
-	err = lfm.ScrobbleAlbum(album)
+	err = album.Scrobble()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

@@ -3,10 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "Df8KgTDApsYmfz5V1Z8bqbmrpqE=",
+			"checksumSHA1": "dKFr3iSPkufHVN0D4GtwUmuTcPI=",
 			"path": "github.com/Sigafoos/lastfm",
-			"revision": "fc9cb677c29441e749f98ce1ff01fa8a6067e72c",
-			"revisionTime": "2018-03-28T17:45:57Z"
+			"revision": "05d34efacb2bbbbfaef01570f394994d520db6d1",
+			"revisionTime": "2018-03-30T01:48:02Z"
 		},
 		{
 			"checksumSHA1": "12g3NDgLPvSJcPKEKzU42m6GWVI=",

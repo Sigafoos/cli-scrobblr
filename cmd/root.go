@@ -1,3 +1,4 @@
+// Package cmd is a command line interface for scrobbling last.fm tracks.
 package cmd
 
 import (
@@ -23,7 +24,7 @@ var (
 )
 
 var (
-	lfm     *lastfm.LastFM
+	lfm     *lastfm.API
 	cli     *bufio.Reader
 	verbose bool
 )
@@ -38,6 +39,7 @@ var rootCmd = &cobra.Command{
 	},
 }
 
+// Execute runs the root command of the app.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -54,7 +56,7 @@ func init() {
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
 
 	cli = bufio.NewReader(os.Stdin)
-	lfm = lastfm.New(APIKey, APISecret, false) // verbose is set after the flags have been parsed
+	lfm = lastfm.New(APIKey, APISecret)
 	lfm.SetSessionKey(getSessionToken())
 }
 
