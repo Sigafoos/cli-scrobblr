@@ -88,6 +88,11 @@ func getSessionToken() (token string, err error) {
 	}
 	defer f.Close()
 
+	// if we can't chmod it don't error out, but let the user know
+	if err = os.Chmod(filename, os.FileMode(0600)); err != nil {
+		fmt.Printf("warning: %s could not be given restricted permissions\n", filename)
+	}
+
 	fmt.Println("Generating session token (your password will NOT be stored)...\n")
 	fmt.Print("last.fm username: ")
 	username, _ := cli.ReadString('\n')
