@@ -57,16 +57,28 @@ func init() {
 
 	cli = bufio.NewReader(os.Stdin)
 	lfm = lastfm.New(APIKey, APISecret)
-	lfm.SetSessionKey(getSessionToken())
+
+	token, err := getSessionToken()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	lfm.SetSessionKey(token)
 }
 
-func getSessionToken() string {
+func getSessionToken() (token string, err error) {
 	usr, _ := user.Current()
 	filename := fmt.Sprintf("%s/.lastfm", usr.HomeDir)
 	b, err := ioutil.ReadFile(filename)
 
+	// if the file exists, read it and return
 	if err == nil {
-		return string(b)
+		token = string(b)
+		if token != "" {
+			return
+		}
+		// it was empty, so remove the file and re-create
+		_ = os.Remove(filename)
 	}
 
 	f, err := os.Create(filename)
@@ -82,15 +94,27 @@ func getSessionToken() string {
 	fmt.Print("last.fm password: ")
 	password, _ := cli.ReadString('\n')
 
-	token, err := lfm.Authenticate(strings.TrimSpace(username), strings.TrimSpace(password))
+	token, err = lfm.Authenticate(strings.TrimSpace(username), strings.TrimSpace(password))
 	if err != nil {
 		fmt.Println(err)
 		f.Close() // won't trigger defer on os.Exit()
 		os.Remove(filename)
 		os.Exit(1)
+	} else if token == "" {
+		fmt.Println("token returned from last.fm was empty")
+		f.Close() // won't trigger defer on os.Exit()
+		os.Remove(filename)
+		os.Exit(1)
 	}
-	f.WriteString(token)
-	f.Sync()
 
-	return token
+	_, err = f.WriteString(token)
+	if err != nil {
+		return "", err
+	}
+	err = f.Sync()
+	if err != nil {
+		return "", err
+	}
+
+	return
 }

@@ -87,7 +87,7 @@ func scrobbleAlbum(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	fmt.Printf("Scrobbling %v tracks from %s - \"%s\"\n\n", len(album.TrackList.Tracks), album.Artist, album.Name)
+	fmt.Printf("Scrobbling %v tracks from %s - \"%s\"\n", len(album.TrackList.Tracks), album.Artist, album.Name)
 	err = album.Scrobble()
 	if err != nil {
 		fmt.Println(err)
