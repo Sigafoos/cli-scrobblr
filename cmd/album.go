@@ -13,13 +13,15 @@ import (
 var (
 	requireMBID bool
 	mbid        string
+	title       string
 )
 
 func init() {
 	rootCmd.AddCommand(albumScrobble)
 
-	rootCmd.Flags().BoolVarP(&requireMBID, "requireMBID", "r", true, "Require results to have a MusicBrainz ID")
-	rootCmd.Flags().StringVarP(&mbid, "mbid", "m", "", "A MusicBrainz ID to use instead of searching (note that not all mbids are in Last.FM)")
+	albumScrobble.Flags().BoolVarP(&requireMBID, "requireMBID", "r", true, "Require results to have a MusicBrainz ID")
+	albumScrobble.Flags().StringVarP(&mbid, "mbid", "m", "", "A MusicBrainz ID to use instead of searching (note that not all mbids are in Last.FM)")
+	albumScrobble.Flags().StringVarP(&title, "title", "t", "", "The title of the album; if omitted, will be prompted for one")
 }
 
 var albumScrobble = &cobra.Command{
@@ -42,9 +44,11 @@ func scrobbleAlbum(cmd *cobra.Command, args []string) {
 			MusicBrainzID: mbid,
 		}
 	} else {
-		fmt.Print("album title: ")
-		title, _ := cli.ReadString('\n')
-		title = strings.TrimSpace(title)
+		if title == "" {
+			fmt.Print("album title: ")
+			title, _ = cli.ReadString('\n')
+			title = strings.TrimSpace(title)
+		}
 
 		albums, err := lfm.AlbumSearch(title, requireMBID)
 		if err != nil {
