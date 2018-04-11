@@ -9,11 +9,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	album  string
-	artist string
-)
-
 func init() {
 	rootCmd.AddCommand(trackScrobble)
 
@@ -24,8 +19,8 @@ func init() {
 
 var trackScrobble = &cobra.Command{
 	Use:   "track",
-	Short: "Scrobble a single tracks on a track",
-	Long:  "Scrobble a single tracks on a track",
+	Short: "Scrobble a single track",
+	Long:  "Scrobble a single track",
 	Run:   scrobbleTrack,
 }
 

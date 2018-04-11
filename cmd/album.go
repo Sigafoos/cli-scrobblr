@@ -10,12 +10,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	requireMBID bool
-	mbid        string
-	title       string
-)
-
 func init() {
 	rootCmd.AddCommand(albumScrobble)
 

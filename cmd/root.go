@@ -24,16 +24,24 @@ var (
 )
 
 var (
-	lfm     *lastfm.API
-	cli     *bufio.Reader
-	verbose bool
+	lfm *lastfm.API
+	cli *bufio.Reader
+)
+
+// command line options
+var (
+	verbose     bool
+	requireMBID bool
+	mbid        string
+	title       string
+	album       string
+	artist      string
 )
 
 var rootCmd = &cobra.Command{
 	Use:   "scrobble",
 	Short: "Scrobble tracks and albums to Last.FM",
-	Long: `something coming soon
-	`,
+	Long:  `Scrobble tracks and albums to Last.FM`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(cmd.UsageString())
 	},
