@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/Sigafoos/lastfm"
 	"github.com/spf13/cobra"
@@ -62,8 +63,8 @@ func scrobbleFile(cmd *cobra.Command, args []string) {
 		fmt.Printf("Scrobbling %s: \"%s\" (%s)\n", values[2], values[0], values[1])
 		err := track.Scrobble()
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			fmt.Printf("*** ERROR with %s: %s\n", values[0], err)
 		}
+		time.Sleep(1 * time.Second)
 	}
 }
